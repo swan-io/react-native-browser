@@ -33,9 +33,7 @@ export const App = () => {
                 animated: true,
                 barStyle:
                   Platform.OS === "ios" &&
-                  (typeof Platform.Version === "string"
-                    ? Number.parseInt(Platform.Version, 10)
-                    : Platform.Version) >= 13
+                  Number.parseInt(Platform.Version, 10) >= 13
                     ? "light-content"
                     : "dark-content",
               });
