@@ -18,45 +18,39 @@ const styles = StyleSheet.create({
   },
 });
 
-export const App = () => {
-  const entry = React.useRef<StatusBarProps>();
+export const App = () => (
+  <SafeAreaView style={styles.container}>
+    <Button
+      title="Open browser"
+      onPress={() => {
+        let entry: StatusBarProps | undefined;
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Button
-        title="Open browser"
-        onPress={() => {
-          openSwanBrowser("http://192.168.1.15:3000", {
-            dismissButtonStyle: "close",
-            onOpen: () => {
-              entry.current = StatusBar.pushStackEntry({
-                animated: true,
-                barStyle:
-                  Platform.OS === "ios" &&
-                  Number.parseInt(Platform.Version, 10) >= 13
-                    ? "light-content"
-                    : "dark-content",
-              });
-            },
-            onClose: (url) => {
-              if (url != null) {
-                const parsed = parseUrl(url, true);
+        openSwanBrowser("http://192.168.1.15:3000", {
+          dismissButtonStyle: "close",
+          onOpen: () => {
+            entry = StatusBar.pushStackEntry({
+              animated: true,
+              barStyle:
+                Platform.OS === "ios" &&
+                Number.parseInt(Platform.Version, 10) >= 13
+                  ? "light-content"
+                  : "dark-content",
+            });
+          },
+          onClose: (url) => {
+            if (url != null) {
+              const parsed = parseUrl(url, true);
+              console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
+            }
 
-                console.log(
-                  "Parsed deeplink:",
-                  JSON.stringify(parsed, null, 2),
-                );
-              }
-
-              if (entry.current != null) {
-                StatusBar.popStackEntry(entry.current);
-              }
-            },
-          }).catch((error) => {
-            console.error(error);
-          });
-        }}
-      />
-    </SafeAreaView>
-  );
-};
+            if (entry != null) {
+              StatusBar.popStackEntry(entry);
+            }
+          },
+        }).catch((error) => {
+          console.error(error);
+        });
+      }}
+    />
+  </SafeAreaView>
+);
