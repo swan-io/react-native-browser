@@ -25,8 +25,10 @@ export const App = () => (
       onPress={() => {
         let entry: StatusBarProps | undefined;
 
-        openSwanBrowser("http://192.168.1.15:3000", {
+        openSwanBrowser("https://swan.io", {
           dismissButtonStyle: "close",
+          barTintColor: "#FFF",
+          controlTintColor: "#000",
           onOpen: () => {
             entry = StatusBar.pushStackEntry({
               animated: true,
