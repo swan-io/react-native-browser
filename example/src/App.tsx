@@ -40,13 +40,13 @@ export const App = () => (
             });
           },
           onClose: (url) => {
+            if (entry != null) {
+              StatusBar.popStackEntry(entry);
+            }
+
             if (url != null) {
               const parsed = parseUrl(url, true);
               console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
-            }
-
-            if (entry != null) {
-              StatusBar.popStackEntry(entry);
             }
           },
         }).catch((error) => {
