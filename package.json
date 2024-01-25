@@ -1,0 +1,64 @@
+{
+  "name": "@swan-io/react-native-browser",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "A simple in-app browser module for react-native.",
+  "author": "Mathieu Acthernoene <mathieu.acthernoene@swan.io>",
+  "homepage": "https://github.com/swan-io/react-native-browser",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
+  "types": "dist/typescript/index.d.ts",
+  "files": [
+    "android",
+    "ios",
+    "dist",
+    "src",
+    "RNSwanBrowser.podspec"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swan-io/react-native-browser.git"
+  },
+  "keywords": [
+    "react-native-browser",
+    "react-native",
+    "in-app-browser",
+    "safari",
+    "chrome-custom-tabs"
+  ],
+  "scripts": {
+    "format": "prettier '**/*' -u -w",
+    "typecheck": "tsc --noEmit",
+    "build": "bob build",
+    "prepack": "prettier '**/*' -u -c && yarn typecheck && yarn build"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
+  },
+  "peerDependencies": {
+    "react": ">=18.1.0",
+    "react-native": ">=0.70.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@types/react": "^18.2.48",
+    "prettier": "^3.2.4",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-builder-bob": "^0.23.2",
+    "typescript": "^5.3.3"
+  }
+}
