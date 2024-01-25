@@ -18,41 +18,41 @@ const styles = StyleSheet.create({
   },
 });
 
-export const App = () => (
-  <SafeAreaView style={styles.container}>
-    <Button
-      title="Open browser"
-      onPress={() => {
-        let entry: StatusBarProps | undefined;
+export const App = () => {
+  const handleOnPress = React.useCallback(() => {
+    let entry: StatusBarProps | undefined;
 
-        openSwanBrowser("https://swan.io", {
-          dismissButtonStyle: "close",
-          barTintColor: "#FFF",
-          controlTintColor: "#000",
-          onOpen: () => {
-            entry = StatusBar.pushStackEntry({
-              animated: true,
-              barStyle:
-                Platform.OS === "ios" &&
-                Number.parseInt(Platform.Version, 10) >= 13
-                  ? "light-content"
-                  : "dark-content",
-            });
-          },
-          onClose: (url) => {
-            if (entry != null) {
-              StatusBar.popStackEntry(entry);
-            }
-
-            if (url != null) {
-              const parsed = parseUrl(url, true);
-              console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
-            }
-          },
-        }).catch((error) => {
-          console.error(error);
+    openSwanBrowser("https://swan.io", {
+      dismissButtonStyle: "close",
+      barTintColor: "#FFF",
+      controlTintColor: "#000",
+      onOpen: () => {
+        entry = StatusBar.pushStackEntry({
+          animated: true,
+          barStyle:
+            Platform.OS === "ios" && Number.parseInt(Platform.Version, 10) >= 13
+              ? "light-content"
+              : "dark-content",
         });
-      }}
-    />
-  </SafeAreaView>
-);
+      },
+      onClose: (url) => {
+        if (entry != null) {
+          StatusBar.popStackEntry(entry);
+        }
+
+        if (url != null) {
+          const parsed = parseUrl(url, true);
+          console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
+        }
+      },
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Button title="Open browser" onPress={handleOnPress} />
+    </SafeAreaView>
+  );
+};
