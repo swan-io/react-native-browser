@@ -2,7 +2,7 @@
   "name": "@swan-io/react-native-browser",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "A simple in-app browser module for react-native.",
+  "description": "An easy-to-use in-app browser module for react-native.",
   "author": "Mathieu Acthernoene <mathieu.acthernoene@swan.io>",
   "homepage": "https://github.com/swan-io/react-native-browser",
   "main": "dist/commonjs/index.js",
