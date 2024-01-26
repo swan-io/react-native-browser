@@ -34,25 +34,23 @@ export const openBrowser = (url: string, options: Options): Promise<void> => {
   const { onOpen, onClose, ...rest } = options;
 
   return NativeModule.open(url, processNativeOptions(rest)).then(() => {
+    let deeplink: string | undefined;
+
     onOpen?.();
 
-    if (onClose != null) {
-      let deeplink: string | undefined;
+    const linkListener = Linking.addListener(
+      "url",
+      ({ url }: { url: string }) => {
+        deeplink = url;
+        NativeModule.close();
+      },
+    );
 
-      const linkListener = Linking.addListener(
-        "url",
-        ({ url }: { url: string }) => {
-          deeplink = url;
-          NativeModule.close();
-        },
-      );
+    const closeListener = emitter.addListener("swanBrowserDidClose", () => {
+      onClose?.(deeplink);
 
-      const closeListener = emitter.addListener("swanBrowserDidClose", () => {
-        onClose?.(deeplink);
-
-        linkListener.remove();
-        closeListener.remove();
-      });
-    }
+      linkListener.remove();
+      closeListener.remove();
+    });
   });
 };
