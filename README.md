@@ -1,6 +1,6 @@
 # @swan-io/react-native-browser
 
-An easy-to-use in-app browser module for react-native, powered by Chrome Custom Tabs / SFSafariViewController.
+An easy-to-use in-app browser module for React Native, powered by Chrome Custom Tabs / SFSafariViewController.
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/swan-io/react-native-browser/blob/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/@swan-io/react-native-browser?style=for-the-badge)](https://www.npmjs.org/package/@swan-io/react-native-browser)
