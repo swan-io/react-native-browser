@@ -75,17 +75,15 @@ openSwanBrowser("https://swan.io", {
 
 ## Handle deeplinks
 
-In order to capture deeplink on browser close event, you have to setup deeplinks. We highty recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
+In order to receive deeplink on browser close event, you have to setup them first. We **highly** recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
 
-Once the redirect URI is hit (on your server), you can handle the result and perform a server redirect to `com.company.myapp://close?success=true&any=infos` (and pass any data you want back to your app using query params).
+Once the redirect URI is reached (a `GET` hits your server), handle the result and perform a server redirect to `com.company.myapp://close?success=true&any=infos` (you can pass data back to your app using query params ✨).
 
 ### On iOS
 
-First, you need to [enable deeplinks support](https://reactnative.dev/docs/linking#enabling-deep-links).
+First, you need to **[enable react-native deeplinks support](https://reactnative.dev/docs/linking#enabling-deep-links)**. Then, edit your `Info.plist` file:
 
-Then edit your `Info.plist`:
-
-```
+```xml
 <key>CFBundleURLTypes</key>
 <array>
   <dict>
@@ -103,7 +101,7 @@ Then edit your `Info.plist`:
 
 ### On Android
 
-Edit your `AndroidManifest.xml`:
+Edit your `AndroidManifest.xml` ([more documentation](https://developer.android.com/training/app-links/deep-linking)):
 
 ```xml
 <activity android:name=".MainActivity">
@@ -115,8 +113,6 @@ Edit your `AndroidManifest.xml`:
   </intent-filter>
 </activity>
 ```
-
-- 📘 [**Documentation**](https://developer.android.com/training/app-links/deep-linking)
 
 ## Run the example app
 
