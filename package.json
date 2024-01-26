@@ -26,6 +26,10 @@
     "safari",
     "chrome-custom-tabs"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "format": "prettier '**/*' -u -w",
     "typecheck": "tsc --noEmit",
