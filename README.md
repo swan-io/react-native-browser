@@ -77,9 +77,6 @@ openBrowser("https://swan.io", {
 
 In order to receive deeplink on browser close event, you have to setup them first. We **highly** recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
 
-> [!TIP]
-> Once the redirect URL is reached (a `GET` hits your server), first handle the result, then perform a server redirect to, let's say, `com.company.myapp://close?success=true` to close the browser (and pass any data back to your app using query params ✨).
-
 ### On iOS
 
 First, you need to **[enable react-native deeplinks support](https://reactnative.dev/docs/linking#enabling-deep-links)**. Then, edit your `Info.plist` file:
@@ -114,6 +111,9 @@ Edit your `AndroidManifest.xml` ([more documentation](https://developer.android.
   </intent-filter>
 </activity>
 ```
+
+> [!TIP]
+> Once the redirect URL is visited (a `GET` hits your server), handle the result and perform a server redirect to `com.company.myapp://close?success=true` to close the browser (and pass any data back to your app using query params ✨).
 
 ## Run the example app
 
