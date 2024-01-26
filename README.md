@@ -51,7 +51,7 @@ const App = () => {
 
 ## API
 
-### openSwanBrowser
+### openSwanBrowser(url: string, options: Options)
 
 ```tsx
 import { openSwanBrowser } from "react-ux-form";
