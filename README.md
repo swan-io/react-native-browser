@@ -33,9 +33,13 @@ const App = () => {
   const handleOnPress = useCallback(() => {
     openBrowser("https://swan.io", {
       onClose: (url) => {
-        if (typeof url !== "undefined") {
-          const parsed = parseUrl(url, true); // parse query params
-          console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
+        if (url) {
+          const { protocol, host, query } = parseUrl(url, true);
+          const origin = `${protocol}//${host}`;
+
+          if (origin === "com.company.myapp://close") {
+            console.log(JSON.stringify(query, null, 2));
+          }
         }
       },
     }).catch((error) => {

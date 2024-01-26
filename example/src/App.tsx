@@ -36,13 +36,17 @@ export const App = () => {
         });
       },
       onClose: (url) => {
-        if (entry != null) {
+        if (entry) {
           StatusBar.popStackEntry(entry);
         }
 
-        if (url != null) {
-          const parsed = parseUrl(url, true);
-          console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
+        if (url) {
+          const { protocol, host, query } = parseUrl(url, true);
+          const origin = `${protocol}//${host}`;
+
+          if (origin === "io.swan.rnbrowserexample://close") {
+            console.log(JSON.stringify(query, null, 2));
+          }
         }
       },
     }).catch((error) => {
