@@ -14,8 +14,8 @@ const rootNodeModules = path.join(root, "node_modules");
 // So we block them at the root, and alias them to the versions in example's node_modules
 const blacklistRE = exclusionList(
   peerDependencies.map(
-    (name) => new RegExp(`^${escape(path.join(rootNodeModules, name))}\\/.*$`)
-  )
+    (name) => new RegExp(`^${escape(path.join(rootNodeModules, name))}\\/.*$`),
+  ),
 );
 
 const extraNodeModules = peerDependencies.reduce((acc, name) => {
