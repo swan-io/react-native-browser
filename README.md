@@ -1,7 +1,3 @@
-<p>
-  <img width="261" src="./docs/demo.png" alt="Demo">
-</p>
-
 # @swan-io/react-native-browser
 
 [![mit licence](https://img.shields.io/dub/l/vibe-d.svg?style=for-the-badge)](https://github.com/swan-io/react-native-browser/blob/main/LICENSE)
@@ -10,3 +6,7 @@
 <br />
 [![platform - android](https://img.shields.io/badge/platform-Android-3ddc84.svg?logo=android&style=for-the-badge)](https://www.android.com)
 [![platform - ios](https://img.shields.io/badge/platform-iOS-000.svg?logo=apple&style=for-the-badge)](https://developer.apple.com/ios)
+
+<p>
+  <img width="261" src="./docs/demo.png" alt="Demo">
+</p>
