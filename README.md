@@ -62,7 +62,7 @@ openBrowser("https://swan.io", {
   controlTintColor: "#000", // in-app browser buttons color
   onOpen: () => {
     // fired on browser opened
-    // useful to switch the StatusBar color
+    // useful to switch the StatusBar color, for example
   },
   onClose: (url) => {
     // fired on browser closed
