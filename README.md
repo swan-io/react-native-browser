@@ -85,7 +85,7 @@ In order to receive deeplink on browser close event, you have to setup them firs
 
 ### On iOS
 
-First, you need to **[enable react-native deeplinks support](https://reactnative.dev/docs/linking#enabling-deep-links)**. Then, edit your `Info.plist` file:
+First, you need to **[enable react-native deeplinks support](https://reactnative.dev/docs/linking#enabling-deep-links)**. Then, edit your `Info.plist` file to add:
 
 ```xml
 <key>CFBundleURLTypes</key>
@@ -105,7 +105,7 @@ First, you need to **[enable react-native deeplinks support](https://reactnative
 
 ### On Android
 
-Edit your `AndroidManifest.xml` ([more documentation](https://developer.android.com/training/app-links/deep-linking)):
+Edit your `AndroidManifest.xml` to add ([more documentation](https://developer.android.com/training/app-links/deep-linking)):
 
 ```xml
 <activity android:name=".MainActivity">
