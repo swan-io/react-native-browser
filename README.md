@@ -10,3 +10,56 @@
 <p>
   <img width="261" src="./docs/demo.png" alt="Demo">
 </p>
+
+## Installation
+
+```bash
+$ yarn add @swan-io/react-native-browser
+# --- or ---
+$ npm install --save @swan-io/react-native-browser
+```
+
+## Links
+
+- ⚖️ [**License**](./LICENSE)
+
+## Quickstart
+
+```tsx
+import { openSwanBrowser } from "@swan-io/react-native-browser";
+import { useCallback } from "react";
+import { Button, SafeAreaView } from "react-native";
+import parseUrl from "url-parse";
+
+const App = () => {
+  const handleOnPress = useCallback(() => {
+    openSwanBrowser("https://swan.io", {
+      onClose: (url) => {
+        if (typeof url !== "undefined") {
+          const parsed = parseUrl(url, true); // parse query params
+          console.log("Parsed deeplink:", JSON.stringify(parsed, null, 2));
+        }
+      },
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
+  return (
+    <SafeAreaView>
+      <Button title="Open browser" onPress={handleOnPress} />
+    </SafeAreaView>
+  );
+};
+```
+
+## Run the example app
+
+```bash
+$ git clone git@github.com:swan-io/react-native-browser.git
+$ cd react-native-browser/example
+
+$ yarn install && yarn start
+# --- or ---
+$ npm install && npm run start
+```
