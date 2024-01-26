@@ -84,7 +84,7 @@ public class RNSwanBrowserModule extends ReactContextBaseJavaModule implements L
       io.swan.rnbrowser.R.anim.inert, com.facebook.react.R.anim.catalyst_slide_down);
 
     @ColorInt int blackColor = activity.getResources().getColor(android.R.color.black);
-    CustomTabColorSchemeParams.Builder paramsBuilder =new CustomTabColorSchemeParams.Builder();
+    CustomTabColorSchemeParams.Builder paramsBuilder = new CustomTabColorSchemeParams.Builder();
     paramsBuilder.setNavigationBarColor(blackColor);
 
     if (options.hasKey("barTintColor")) {
