@@ -8,7 +8,7 @@ import {
 const { RNSwanBrowser } = NativeModules;
 const emitter = new NativeEventEmitter(RNSwanBrowser);
 
-type Options = {
+export type Options = {
   dismissButtonStyle?: "cancel" | "close" | "done";
   barTintColor?: string;
   controlTintColor?: string;
@@ -30,11 +30,10 @@ const NativeModule = RNSwanBrowser as {
   close: () => void;
 };
 
-export const openSwanBrowser = (
-  url: string,
-  { onOpen, onClose, ...options }: Options,
-): Promise<void> => {
-  return NativeModule.open(url, processNativeOptions(options)).then(() => {
+export const openBrowser = (url: string, options: Options): Promise<void> => {
+  const { onOpen, onClose, ...rest } = options;
+
+  return NativeModule.open(url, processNativeOptions(rest)).then(() => {
     onOpen?.();
 
     if (onClose != null) {

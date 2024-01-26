@@ -1,4 +1,4 @@
-import { openSwanBrowser } from "@swan-io/react-native-browser";
+import { openBrowser } from "@swan-io/react-native-browser";
 import * as React from "react";
 import {
   Button,
@@ -22,7 +22,7 @@ export const App = () => {
   const handleOnPress = React.useCallback(() => {
     let entry: StatusBarProps | undefined;
 
-    openSwanBrowser("https://swan.io", {
+    openBrowser("https://swan.io", {
       dismissButtonStyle: "close",
       barTintColor: "#FFF",
       controlTintColor: "#000",

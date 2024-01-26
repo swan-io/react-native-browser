@@ -22,14 +22,14 @@ $ npm install --save @swan-io/react-native-browser
 ## Quickstart
 
 ```tsx
-import { openSwanBrowser } from "@swan-io/react-native-browser";
+import { openBrowser } from "@swan-io/react-native-browser";
 import { useCallback } from "react";
 import { Button, SafeAreaView } from "react-native";
 import parseUrl from "url-parse";
 
 const App = () => {
   const handleOnPress = useCallback(() => {
-    openSwanBrowser("https://swan.io", {
+    openBrowser("https://swan.io", {
       onClose: (url) => {
         if (typeof url !== "undefined") {
           const parsed = parseUrl(url, true); // parse query params
@@ -51,12 +51,12 @@ const App = () => {
 
 ## API
 
-### openSwanBrowser(url: string, options: Options)
+### openBrowser(url: string, options: Options)
 
 ```tsx
-import { openSwanBrowser } from "react-ux-form";
+import { openBrowser } from "react-ux-form";
 
-openSwanBrowser("https://swan.io", {
+openBrowser("https://swan.io", {
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
   barTintColor: "#FFF", // in-app browser UI background color
   controlTintColor: "#000", // in-app browser buttons color
