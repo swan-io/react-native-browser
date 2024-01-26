@@ -77,7 +77,7 @@ openSwanBrowser("https://swan.io", {
 
 In order to receive deeplink on browser close event, you have to setup them first. We **highly** recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
 
-Once the redirect URI is reached (a `GET` hits your server), handle the result and perform a server redirect to `com.company.myapp://close?success=true&any=infos` (you can pass data back to your app using query params ✨).
+Once the redirect URI is reached (a `GET` hits your server), handle the result and perform a server redirect to `com.company.myapp://close?success=true` (you can pass data back to your app using query params ✨).
 
 ### On iOS
 
