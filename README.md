@@ -60,7 +60,7 @@ const App = () => {
 ### openBrowser(url: string, options: Options)
 
 ```tsx
-import { openBrowser } from "react-ux-form";
+import { openBrowser } from "@swan-io/react-native-browser";
 
 openBrowser("https://swan.io", {
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
