@@ -50,5 +50,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+" // From node_modules
-    implementation "androidx.browser:browser:${safeExtGet("androidXBrowserVersion", "1.6.0")}"
+    implementation "androidx.browser:browser:${safeExtGet("androidXBrowserVersion", "1.5.0")}"
 }
