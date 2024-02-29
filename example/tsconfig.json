@@ -23,9 +23,9 @@
     "noUnusedParameters": true,
 
     "paths": {
-      "@swan-io/react-native-browser": ["../src"],
-    },
+      "@swan-io/react-native-browser": ["../src"]
+    }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js"],
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
 }
