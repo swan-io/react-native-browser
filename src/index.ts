@@ -1,39 +1,43 @@
-import {
-  Linking,
-  NativeEventEmitter,
-  NativeModules,
-  processColor,
-} from "react-native";
+import { Linking, NativeEventEmitter, processColor } from "react-native";
+import NativeModule from "./NativeModule";
 
-const { RNSwanBrowser } = NativeModules;
-const emitter = new NativeEventEmitter(RNSwanBrowser);
+const emitter = new NativeEventEmitter(NativeModule);
+
+export type DismissButtonStyle = "cancel" | "close" | "done";
 
 export type Options = {
-  dismissButtonStyle?: "cancel" | "close" | "done";
+  dismissButtonStyle?: DismissButtonStyle;
   barTintColor?: string;
   controlTintColor?: string;
   onOpen?: () => void;
   onClose?: (url?: string) => void;
 };
 
-const processNativeOptions = (options: Options) => ({
-  dismissButtonStyle: options.dismissButtonStyle,
-  barTintColor: processColor(options.barTintColor),
-  controlTintColor: processColor(options.controlTintColor),
-});
+const convertColorToNumber = (
+  color: string | undefined,
+): number | undefined => {
+  const processed = processColor(color);
 
-const NativeModule = RNSwanBrowser as {
-  open: (
-    url: string,
-    options: ReturnType<typeof processNativeOptions>,
-  ) => Promise<null>;
-  close: () => void;
+  if (typeof processed === "number") {
+    return processed;
+  }
 };
 
 export const openBrowser = (url: string, options: Options): Promise<void> => {
-  const { onOpen, onClose, ...rest } = options;
+  const {
+    dismissButtonStyle,
+    barTintColor,
+    controlTintColor,
+    onOpen,
+    onClose,
+  } = options;
 
-  return NativeModule.open(url, processNativeOptions(rest)).then(() => {
+  return NativeModule.open(
+    url,
+    dismissButtonStyle,
+    convertColorToNumber(barTintColor),
+    convertColorToNumber(controlTintColor),
+  ).then(() => {
     let deeplink: string | undefined;
 
     onOpen?.();

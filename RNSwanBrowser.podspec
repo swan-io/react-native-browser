@@ -4,7 +4,6 @@ package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
   s.name         = "RNSwanBrowser"
-  s.dependency     "React-Core"
 
   s.version      = package["version"]
   s.license      = package["license"]
@@ -16,5 +15,12 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source       = { :git => package["repository"]["url"], :tag => s.version }
-  s.source_files = "ios/*.{h,m}"
+  s.source_files = "ios/**/*.{h,m,mm}"
+  s.frameworks   = "SafariServices"
+
+  if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
+    install_modules_dependencies(s)
+  else
+    s.dependency   "React-Core"
+  end
 end

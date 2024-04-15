@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD3987DF2A091887007E27CF /* RNSwanBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3987DE2A091887007E27CF /* RNSwanBrowser.m */; };
+		DD3987DF2A091887007E27CF /* RNSwanBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD3987DE2A091887007E27CF /* RNSwanBrowser.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNSwanBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSwanBrowser.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		66EEFEBC1F217A9E0021D48A /* RNSwanBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSwanBrowser.h; sourceTree = "<group>"; };
-		DD3987DE2A091887007E27CF /* RNSwanBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNSwanBrowser.m; sourceTree = "<group>"; };
+		DD3987DE2A091887007E27CF /* RNSwanBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNSwanBrowser.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -29,7 +29,7 @@
 			isa = PBXGroup;
 			children = (
 				66EEFEBC1F217A9E0021D48A /* RNSwanBrowser.h */,
-				DD3987DE2A091887007E27CF /* RNSwanBrowser.m */,
+				DD3987DE2A091887007E27CF /* RNSwanBrowser.mm */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			indentWidth = 2;
@@ -91,7 +91,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD3987DF2A091887007E27CF /* RNSwanBrowser.m in Sources */,
+				DD3987DF2A091887007E27CF /* RNSwanBrowser.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

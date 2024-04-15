@@ -1346,7 +1346,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
-  DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
+  DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 72d3b09a21c97463594ef6908c27b7463cd1418b
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
@@ -1398,7 +1398,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 91c3069839ca10d2dd1d18dbe60a478f2bb77405
   React-utils: b3ef4d6a2c13c343b9150e3070fa1984a1c1ee27
   ReactCommon: a2081027a321e7dd4825855111d57954a01fb02a
-  RNSwanBrowser: 5ae4db322237a884254588f889d2ff040c25bd1f
+  RNSwanBrowser: a5a1dd037ad38e4df50b1bd6d9e2cbb1f536c3fb
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 553006c695f727afa3d30fdac7542f7ea6e2a4f9
 
