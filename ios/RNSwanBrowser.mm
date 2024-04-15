@@ -1,8 +1,7 @@
 #import "RNSwanBrowser.h"
 
 #import <React/RCTConvert.h>
-
-@import SafariServices;
+#import <SafariServices/SafariServices.h>
 
 @interface RNSwanBrowser() <SFSafariViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -52,19 +51,30 @@ RCT_EXPORT_MODULE();
   [self handleOnClose];
 }
 
+#ifdef RCT_NEW_ARCH_ENABLED
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {
+  return std::make_shared<facebook::react::NativeRNSwanBrowserSpecJSI>(params);
+}
+
+- (void)open:(NSString *)url
+        dismissButtonStyle:(NSString *)dismissButtonStyle
+        barTintColor:(NSNumber *)barTintColor
+        controlTintColor:(NSNumber *)controlTintColor
+        resolve:(RCTPromiseResolveBlock)resolve
+        reject:(RCTPromiseRejectBlock)reject {
+#else
 RCT_EXPORT_METHOD(open:(NSString *)url
-                  options:(NSDictionary * _Nonnull)options
+                  dismissButtonStyle:(NSString *)dismissButtonStyle
+                  barTintColor:(NSNumber *)barTintColor
+                  controlTintColor:(NSNumber *)controlTintColor
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
+#endif
   if (_safariVC != nil) {
     return reject(@"swan_browser_visible", @"An instance of the swan browser is already visible", nil);
   }
 
   @try {
-    NSString *dismissButtonStyle = [options valueForKey:@"dismissButtonStyle"];
-    NSNumber *barTintColor = [options valueForKey:@"barTintColor"];
-    NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
-
     SFSafariViewControllerConfiguration *config = [SFSafariViewControllerConfiguration new];
     [config setBarCollapsingEnabled:false];
     [config setEntersReaderIfAvailable:false];
@@ -98,7 +108,11 @@ RCT_EXPORT_METHOD(open:(NSString *)url
   }
 }
 
+#ifdef RCT_NEW_ARCH_ENABLED
+- (void)close {
+#else
 RCT_EXPORT_METHOD(close) {
+#endif
   if (_safariVC != nil) {
     [RCTPresentedViewController() dismissViewControllerAnimated:true completion:^{
       [self handleOnClose];

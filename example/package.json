@@ -10,26 +10,24 @@
     "start": "react-native start",
     "serve": "serve ./src",
     "reinstall": "yarn clean && yarn",
-    "preinstall": "cd .. && yarn && yarn build && cd example",
-    "postinstall": "yarn pod-install"
+    "preinstall": "cd .. && yarn && yarn build && cd example"
   },
   "dependencies": {
     "@swan-io/react-native-browser": "link:../",
     "react": "18.2.0",
-    "react-native": "0.73.5",
+    "react-native": "0.74.0-rc.8",
     "url-parse": "1.5.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native/babel-preset": "0.73.21",
-    "@react-native/metro-config": "0.73.5",
-    "@types/react": "^18.2.61",
+    "@react-native/babel-preset": "0.74.79",
+    "@react-native/metro-config": "0.74.79",
+    "@types/react": "^18.2.78",
     "@types/url-parse": "^1.4.11",
     "babel-plugin-module-resolver": "^5.0.0",
-    "pod-install": "^0.2.0",
     "serve": "^14.2.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }
