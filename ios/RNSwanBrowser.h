@@ -4,7 +4,7 @@
 
 #import <RNSwanBrowserSpec/RNSwanBrowserSpec.h>
 
-@interface RNSwanBrowser : RCTEventEmitter <NativeModuleSpec>
+@interface RNSwanBrowser : RCTEventEmitter <NativeRNSwanBrowserSpec>
 @end
 
 #else

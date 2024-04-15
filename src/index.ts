@@ -1,5 +1,5 @@
 import { Linking, NativeEventEmitter, processColor } from "react-native";
-import NativeModule from "./NativeModule";
+import NativeModule from "./NativeRNSwanBrowser";
 
 const emitter = new NativeEventEmitter(NativeModule);
 
