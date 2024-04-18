@@ -11,6 +11,7 @@ import androidx.core.graphics.ColorUtils;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 import io.swan.rnbrowser.helpers.CustomTabActivityHelper;
@@ -29,7 +30,7 @@ public class RNSwanBrowserModuleImpl {
 
   protected static void open(final Activity activity,
                              final String url,
-                             final Double barTintColor,
+                             final ReadableMap options,
                              final Promise promise) {
     CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
     intentBuilder.setShowTitle(false);
@@ -44,13 +45,13 @@ public class RNSwanBrowserModuleImpl {
     CustomTabColorSchemeParams.Builder paramsBuilder = new CustomTabColorSchemeParams.Builder();
     paramsBuilder.setNavigationBarColor(blackColor);
 
-    if (barTintColor != null) {
-      @ColorInt int intValue = barTintColor.intValue();
+    if (options.hasKey("barTintColor")) {
+      @ColorInt int barTintColor = options.getInt("barTintColor");
 
-      paramsBuilder.setToolbarColor(intValue);
-      paramsBuilder.setSecondaryToolbarColor(intValue);
+      paramsBuilder.setToolbarColor(barTintColor);
+      paramsBuilder.setSecondaryToolbarColor(barTintColor);
 
-      intentBuilder.setColorScheme(ColorUtils.calculateLuminance(intValue) > 0.5
+      intentBuilder.setColorScheme(ColorUtils.calculateLuminance(barTintColor) > 0.5
         ? CustomTabsIntent.COLOR_SCHEME_LIGHT
         : CustomTabsIntent.COLOR_SCHEME_DARK);
     }
