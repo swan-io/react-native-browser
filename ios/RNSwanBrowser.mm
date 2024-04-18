@@ -57,18 +57,24 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)open:(NSString *)url
-        dismissButtonStyle:(NSString *)dismissButtonStyle
-        barTintColor:(NSNumber *)barTintColor
-        controlTintColor:(NSNumber *)controlTintColor
-        resolve:(RCTPromiseResolveBlock)resolve
-        reject:(RCTPromiseRejectBlock)reject {
+     options:(JS::NativeRNSwanBrowser::Options &)options
+     resolve:(RCTPromiseResolveBlock)resolve
+      reject:(RCTPromiseRejectBlock)reject {
+
+  NSString *dismissButtonStyle = options.dismissButtonStyle();
+  NSNumber *barTintColor = options.barTintColor().has_value() ? [NSNumber numberWithDouble:options.barTintColor().value()] : nil;
+  NSNumber *controlTintColor = options.controlTintColor().has_value() ? [NSNumber numberWithDouble:options.controlTintColor().value()] : nil;
+
 #else
 RCT_EXPORT_METHOD(open:(NSString *)url
-                  dismissButtonStyle:(NSString *)dismissButtonStyle
-                  barTintColor:(NSNumber *)barTintColor
-                  controlTintColor:(NSNumber *)controlTintColor
+                  options:(NSDictionary * _Nonnull)options
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
+
+  NSString *dismissButtonStyle = [options valueForKey:@"dismissButtonStyle"];
+  NSNumber *barTintColor = [options valueForKey:@"barTintColor"];
+  NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
+
 #endif
   if (_safariVC != nil) {
     return reject(@"swan_browser_visible", @"An instance of the swan browser is already visible", nil);
