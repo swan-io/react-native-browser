@@ -3,11 +3,11 @@ package io.swan.rnbrowser;
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 
 @ReactModule(name = RNSwanBrowserModuleImpl.NAME)
@@ -41,11 +41,7 @@ public class RNSwanBrowserModule extends NativeRNSwanBrowserSpec implements Life
   public void onHostDestroy() {}
 
   @Override
-  public void open(String url,
-                   @Nullable String dismissButtonStyle,
-                   @Nullable Double barTintColor,
-                   @Nullable Double controlTintColor,
-                   Promise promise) {
+  public void open(String url, ReadableMap options, Promise promise) {
     if (mBrowserVisible) {
       promise.reject("swan_browser_visible",
         "An instance of the swan browser is already visible");
@@ -61,7 +57,7 @@ public class RNSwanBrowserModule extends NativeRNSwanBrowserSpec implements Life
     }
 
     mBrowserVisible = true;
-    RNSwanBrowserModuleImpl.open(activity, url, barTintColor, promise);
+    RNSwanBrowserModuleImpl.open(activity, url, options, promise);
   }
 
   @Override

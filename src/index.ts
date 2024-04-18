@@ -24,20 +24,15 @@ const convertColorToNumber = (
 };
 
 export const openBrowser = (url: string, options: Options): Promise<void> => {
-  const {
-    dismissButtonStyle,
-    barTintColor,
-    controlTintColor,
-    onOpen,
-    onClose,
-  } = options;
+  const { dismissButtonStyle, onOpen, onClose } = options;
+  const barTintColor = convertColorToNumber(options.barTintColor);
+  const controlTintColor = convertColorToNumber(options.controlTintColor);
 
-  return NativeModule.open(
-    url,
-    dismissButtonStyle,
-    convertColorToNumber(barTintColor),
-    convertColorToNumber(controlTintColor),
-  ).then(() => {
+  return NativeModule.open(url, {
+    ...(dismissButtonStyle != null && { dismissButtonStyle }),
+    ...(barTintColor != null && { barTintColor }),
+    ...(controlTintColor != null && { controlTintColor }),
+  }).then(() => {
     let deeplink: string | undefined;
 
     onOpen?.();
