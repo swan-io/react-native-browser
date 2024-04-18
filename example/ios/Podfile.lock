@@ -1163,7 +1163,7 @@ PODS:
     - React-logger (= 0.74.0-rc.8)
     - React-perflogger (= 0.74.0-rc.8)
     - React-utils (= 0.74.0-rc.8)
-  - RNSwanBrowser (0.2.0):
+  - RNSwanBrowser (0.2.1):
     - React-Core
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
@@ -1398,7 +1398,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 91c3069839ca10d2dd1d18dbe60a478f2bb77405
   React-utils: b3ef4d6a2c13c343b9150e3070fa1984a1c1ee27
   ReactCommon: a2081027a321e7dd4825855111d57954a01fb02a
-  RNSwanBrowser: 82802945bfe1142eb5aad8c9f1276df17864cbaa
+  RNSwanBrowser: 57d20670f4461b8bc3842665189937250560f18e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 553006c695f727afa3d30fdac7542f7ea6e2a4f9
 
