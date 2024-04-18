@@ -4,9 +4,9 @@ import { TurboModuleRegistry } from "react-native";
 export interface Spec extends TurboModule {
   open(
     url: string,
+    barTintColor: number,
+    controlTintColor: number,
     dismissButtonStyle?: string,
-    barTintColor?: number,
-    controlTintColor?: number,
   ): Promise<null>;
 
   close(): void;

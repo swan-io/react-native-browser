@@ -34,9 +34,9 @@ export const openBrowser = (url: string, options: Options): Promise<void> => {
 
   return NativeModule.open(
     url,
+    convertColorToNumber(barTintColor) || -1,
+    convertColorToNumber(controlTintColor) || -1,
     dismissButtonStyle,
-    convertColorToNumber(barTintColor),
-    convertColorToNumber(controlTintColor),
   ).then(() => {
     let deeplink: string | undefined;
 

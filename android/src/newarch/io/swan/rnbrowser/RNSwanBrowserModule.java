@@ -42,9 +42,9 @@ public class RNSwanBrowserModule extends NativeRNSwanBrowserSpec implements Life
 
   @Override
   public void open(String url,
+                   Double barTintColor,
+                   Double controlTintColor,
                    @Nullable String dismissButtonStyle,
-                   @Nullable Double barTintColor,
-                   @Nullable Double controlTintColor,
                    Promise promise) {
     if (mBrowserVisible) {
       promise.reject("swan_browser_visible",

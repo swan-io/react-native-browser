@@ -44,7 +44,7 @@ public class RNSwanBrowserModuleImpl {
     CustomTabColorSchemeParams.Builder paramsBuilder = new CustomTabColorSchemeParams.Builder();
     paramsBuilder.setNavigationBarColor(blackColor);
 
-    if (barTintColor != null) {
+    if (barTintColor != -1) {
       @ColorInt int intValue = barTintColor.intValue();
 
       paramsBuilder.setToolbarColor(intValue);

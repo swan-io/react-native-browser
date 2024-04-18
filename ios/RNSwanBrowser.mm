@@ -57,16 +57,16 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)open:(NSString *)url
+        barTintColor:(nonnull NSNumber *)barTintColor
+        controlTintColor:(nonnull NSNumber *)controlTintColor
         dismissButtonStyle:(NSString *)dismissButtonStyle
-        barTintColor:(NSNumber *)barTintColor
-        controlTintColor:(NSNumber *)controlTintColor
         resolve:(RCTPromiseResolveBlock)resolve
         reject:(RCTPromiseRejectBlock)reject {
 #else
 RCT_EXPORT_METHOD(open:(NSString *)url
+                  barTintColor:(nonnull NSNumber *)barTintColor
+                  controlTintColor:(nonnull NSNumber *)controlTintColor
                   dismissButtonStyle:(NSString *)dismissButtonStyle
-                  barTintColor:(NSNumber *)barTintColor
-                  controlTintColor:(NSNumber *)controlTintColor
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
 #endif
@@ -89,10 +89,10 @@ RCT_EXPORT_METHOD(open:(NSString *)url
       [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleDone];
     }
 
-    if (barTintColor != nil) {
+    if ([barTintColor intValue] != -1) {
       [_safariVC setPreferredBarTintColor:[RCTConvert UIColor:barTintColor]];
     }
-    if (controlTintColor != nil) {
+    if ([controlTintColor intValue] != -1) {
       [_safariVC setPreferredControlTintColor:[RCTConvert UIColor:controlTintColor]];
     }
 
