@@ -28,14 +28,16 @@ public class RNSwanBrowserPackage extends TurboReactPackage {
   public ReactModuleInfoProvider getReactModuleInfoProvider() {
     return () -> {
       final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
+      boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
 
       ReactModuleInfo moduleInfo = new ReactModuleInfo(
         RNSwanBrowserModuleImpl.NAME,
         RNSwanBrowserModuleImpl.NAME,
         false,
         false,
+        true,
         false,
-        BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+        isTurboModule
       );
 
       moduleInfos.put(RNSwanBrowserModuleImpl.NAME, moduleInfo);
