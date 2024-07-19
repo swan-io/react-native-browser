@@ -2,6 +2,7 @@ import type { TurboModule } from "react-native";
 import { TurboModuleRegistry } from "react-native";
 
 type Options = {
+  animationType?: string;
   dismissButtonStyle?: string;
   barTintColor?: number;
   controlTintColor?: number;

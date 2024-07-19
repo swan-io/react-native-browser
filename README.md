@@ -63,6 +63,7 @@ const App = () => {
 import { openBrowser } from "@swan-io/react-native-browser";
 
 openBrowser("https://swan.io", {
+  animationType: "", // "fade" | "slide" (default to "slide")
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
   barTintColor: "#FFF", // in-app browser UI background color
   controlTintColor: "#000", // in-app browser buttons color
