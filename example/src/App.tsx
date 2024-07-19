@@ -23,6 +23,7 @@ export const App = () => {
     let entry: StatusBarProps | undefined;
 
     openBrowser("https://swan.io", {
+      animationType: "slide",
       dismissButtonStyle: "close",
       barTintColor: "#FFF",
       controlTintColor: "#000",

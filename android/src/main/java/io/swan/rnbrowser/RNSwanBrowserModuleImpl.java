@@ -36,10 +36,19 @@ public class RNSwanBrowserModuleImpl {
     intentBuilder.setShowTitle(false);
     intentBuilder.setInstantAppsEnabled(false);
 
-    intentBuilder.setStartAnimations(activity,
-      com.facebook.react.R.anim.catalyst_slide_up, io.swan.rnbrowser.R.anim.inert);
-    intentBuilder.setExitAnimations(activity,
-      io.swan.rnbrowser.R.anim.inert, com.facebook.react.R.anim.catalyst_slide_down);
+    String animationType = options.getString("animationType");
+
+    if (animationType != null && animationType.equals("fade")) {
+      intentBuilder.setStartAnimations(activity,
+        com.facebook.react.R.anim.catalyst_fade_in, io.swan.rnbrowser.R.anim.inert);
+      intentBuilder.setExitAnimations(activity,
+        io.swan.rnbrowser.R.anim.inert, com.facebook.react.R.anim.catalyst_fade_out);
+    } else {
+      intentBuilder.setStartAnimations(activity,
+        com.facebook.react.R.anim.catalyst_slide_up, io.swan.rnbrowser.R.anim.inert);
+      intentBuilder.setExitAnimations(activity,
+        io.swan.rnbrowser.R.anim.inert, com.facebook.react.R.anim.catalyst_slide_down);
+    }
 
     @ColorInt int blackColor = activity.getResources().getColor(android.R.color.black);
     CustomTabColorSchemeParams.Builder paramsBuilder = new CustomTabColorSchemeParams.Builder();

@@ -3,9 +3,11 @@ import NativeModule from "./NativeRNSwanBrowser";
 
 const emitter = new NativeEventEmitter(NativeModule);
 
+export type AnimationType = "fade" | "slide";
 export type DismissButtonStyle = "cancel" | "close" | "done";
 
 export type Options = {
+  animationType?: AnimationType;
   dismissButtonStyle?: DismissButtonStyle;
   barTintColor?: string;
   controlTintColor?: string;
@@ -24,11 +26,12 @@ const convertColorToNumber = (
 };
 
 export const openBrowser = (url: string, options: Options): Promise<void> => {
-  const { dismissButtonStyle, onOpen, onClose } = options;
+  const { animationType, dismissButtonStyle, onOpen, onClose } = options;
   const barTintColor = convertColorToNumber(options.barTintColor);
   const controlTintColor = convertColorToNumber(options.controlTintColor);
 
   return NativeModule.open(url, {
+    ...(animationType != null && { animationType }),
     ...(dismissButtonStyle != null && { dismissButtonStyle }),
     ...(barTintColor != null && { barTintColor }),
     ...(controlTintColor != null && { controlTintColor }),

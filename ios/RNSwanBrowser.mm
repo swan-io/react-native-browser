@@ -61,6 +61,7 @@ RCT_EXPORT_MODULE();
      resolve:(RCTPromiseResolveBlock)resolve
       reject:(RCTPromiseRejectBlock)reject {
 
+  NSString *animationType = options.animationType();
   NSString *dismissButtonStyle = options.dismissButtonStyle();
   NSNumber *barTintColor = options.barTintColor().has_value() ? [NSNumber numberWithDouble:options.barTintColor().value()] : nil;
   NSNumber *controlTintColor = options.controlTintColor().has_value() ? [NSNumber numberWithDouble:options.controlTintColor().value()] : nil;
@@ -71,6 +72,7 @@ RCT_EXPORT_METHOD(open:(NSString *)url
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
 
+  NSString *animationType = [options valueForKey:@"animationType"];
   NSString *dismissButtonStyle = [options valueForKey:@"dismissButtonStyle"];
   NSNumber *barTintColor = [options valueForKey:@"barTintColor"];
   NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
@@ -102,7 +104,13 @@ RCT_EXPORT_METHOD(open:(NSString *)url
       [_safariVC setPreferredControlTintColor:[RCTConvert UIColor:controlTintColor]];
     }
 
-    [_safariVC setModalPresentationStyle:UIModalPresentationPageSheet];
+    if (animationType != nil && [animationType isEqualToString:@"fade"]) {
+      [_safariVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+      [_safariVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    } else {
+      [_safariVC setModalPresentationStyle:UIModalPresentationPageSheet];
+    }
+
     [RCTPresentedViewController() presentViewController:_safariVC animated:true completion:nil];
 
     _safariVC.delegate = self;
