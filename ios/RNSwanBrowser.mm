@@ -87,7 +87,7 @@ RCT_EXPORT_METHOD(open:(NSString *)url
 
     _safariVC = [[SFSafariViewController alloc] initWithURL:[[NSURL alloc] initWithString:url] configuration:config];
 
-    if (dismissButtonStyle == nil) {
+    if (dismissButtonStyle == nil || [dismissButtonStyle isEqualToString:@"close"]) {
       [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleClose];
     } else if ([dismissButtonStyle isEqualToString:@"cancel"]) {
       [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleCancel];
