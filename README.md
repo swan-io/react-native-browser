@@ -80,8 +80,8 @@ openBrowser("https://swan.io", {
 });
 ```
 
-> [!WARNING]
-> On Android, the Chrome app must be opened at least once for this to work—a step often overlooked when using emulators in development.
+> [!IMPORTANT]
+> On Android, the Chrome app must be opened at least once for this to work — a step often overlooked when using emulators in development.
 
 ## Handle deeplinks
 
