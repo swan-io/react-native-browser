@@ -80,6 +80,9 @@ openBrowser("https://swan.io", {
 });
 ```
 
+> [!IMPORTANT]
+> On Android, the Chrome app must be opened at least once for this to work — a step often overlooked when using emulators in development.
+
 ## Handle deeplinks
 
 In order to receive deeplink on browser close event, you have to setup them first. We **highly** recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
