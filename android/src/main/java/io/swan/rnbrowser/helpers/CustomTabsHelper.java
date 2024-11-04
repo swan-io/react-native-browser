@@ -1,4 +1,4 @@
-// https://github.com/GoogleChrome/android-browser-helper/blob/master/demos/custom-tabs-example-app/src/main/java/org/chromium/customtabsdemos/CustomTabsHelper.java
+// https://github.com/GoogleChrome/android-browser-helper/blob/main/demos/custom-tabs-example-app/src/main/java/org/chromium/customtabsdemos/CustomTabsHelper.java
 //
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
