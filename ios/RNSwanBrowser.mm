@@ -118,6 +118,7 @@ RCT_EXPORT_METHOD(open:(NSString *)url
 
     resolve(nil);
   } @catch (NSException *exception) {
+    _safariVC = nil;
     reject(exception.name, exception.reason, nil);
   }
 }
