@@ -1509,7 +1509,7 @@ PODS:
     - React-logger (= 0.76.1)
     - React-perflogger (= 0.76.1)
     - React-utils (= 0.76.1)
-  - RNSwanBrowser (0.4.0):
+  - RNSwanBrowser (0.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1799,7 +1799,7 @@ SPEC CHECKSUMS:
   React-utils: 0c825829a8e2ca39bb049d95f270a2dbf39ecb05
   ReactCodegen: 3b0ff1c9015e3ebcf2bd2f8559995c74bfacf8a1
   ReactCommon: c21a3d6a8d3e98b6e99730139a52f59f0beea89d
-  RNSwanBrowser: f318c7239f91b5ba00f67ac99cdd416282f058c6
+  RNSwanBrowser: 5fc533667b559cb705c6434ab7f762cf3ed66f47
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: db69236006b8b1c6d55ab453390c882306cbf219
 
