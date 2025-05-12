@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@swan-io/react-native-browser": "link:../",
-    "react": "18.3.1",
-    "react-native": "0.76.1",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
     "url-parse": "1.5.10"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "@react-native-community/cli-platform-ios": "15.0.0",
     "@react-native/babel-preset": "0.76.1",
     "@react-native/metro-config": "0.76.1",
-    "@types/react": "^18.2.6",
+    "@types/react": "^19.0.0",
     "@types/url-parse": "^1.4.11",
     "babel-plugin-module-resolver": "^5.0.2",
     "serve": "^14.2.4",

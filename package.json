@@ -33,10 +33,11 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
+    "clean": "rm -rf dist",
     "format": "prettier '**/*' -u -w",
     "typecheck": "tsc --noEmit",
-    "build": "bob build",
-    "prepack": "prettier '**/*' -u -c && yarn typecheck && yarn build"
+    "build": "yarn clean && bob build && rm -rf dist/*/package.json",
+    "prepack": "prettier '**/*' -u -c && yarn lint && yarn typecheck && yarn build"
   },
   "codegenConfig": {
     "name": "RNSwanBrowserSpec",
@@ -61,17 +62,17 @@
     ]
   },
   "peerDependencies": {
-    "react": ">=18.1.0",
-    "react-native": ">=0.70.0"
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
-    "@types/react": "^18.2.6",
+    "@types/react": "^19.0.0",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "react": "18.3.1",
-    "react-native": "0.76.1",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
     "react-native-builder-bob": "^0.30.3",
     "typescript": "^5.6.3"
   }
