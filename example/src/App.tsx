@@ -1,11 +1,11 @@
 import { openBrowser } from "@swan-io/react-native-browser";
 import * as React from "react";
 import {
+  type StatusBarProps,
   Button,
   Platform,
   SafeAreaView,
   StatusBar,
-  StatusBarProps,
   StyleSheet,
 } from "react-native";
 import parseUrl from "url-parse";
