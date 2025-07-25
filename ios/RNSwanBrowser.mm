@@ -9,9 +9,7 @@
 
 @end
 
-@implementation RNSwanBrowser {
-  bool hasListeners;
-}
+@implementation RNSwanBrowser
 
 RCT_EXPORT_MODULE();
 
@@ -23,24 +21,9 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
-- (void)startObserving {
-  hasListeners = YES;
-}
-
-- (void)stopObserving {
-  hasListeners = NO;
-}
-
-- (NSArray<NSString *> *)supportedEvents {
-  return @[@"swanBrowserDidClose"];
-}
-
 - (void)handleOnClose {
   _safariVC = nil;
-
-  if (hasListeners) {
-    [self sendEventWithName:@"swanBrowserDidClose" body:nil];
-  }
+  [self emitOnClose:true];
 }
 
 - (void)presentationControllerDidDismiss:(UIPresentationController *)controller {
@@ -51,7 +34,6 @@ RCT_EXPORT_MODULE();
   [self handleOnClose];
 }
 
-#ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {
   return std::make_shared<facebook::react::NativeRNSwanBrowserSpecJSI>(params);
 }
@@ -66,18 +48,6 @@ RCT_EXPORT_MODULE();
   NSNumber *barTintColor = options.barTintColor().has_value() ? [NSNumber numberWithDouble:options.barTintColor().value()] : nil;
   NSNumber *controlTintColor = options.controlTintColor().has_value() ? [NSNumber numberWithDouble:options.controlTintColor().value()] : nil;
 
-#else
-RCT_EXPORT_METHOD(open:(NSString *)url
-                  options:(NSDictionary * _Nonnull)options
-                  resolve:(RCTPromiseResolveBlock)resolve
-                  reject:(RCTPromiseRejectBlock)reject) {
-
-  NSString *animationType = [options valueForKey:@"animationType"];
-  NSString *dismissButtonStyle = [options valueForKey:@"dismissButtonStyle"];
-  NSNumber *barTintColor = [options valueForKey:@"barTintColor"];
-  NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
-
-#endif
   if (_safariVC != nil) {
     return reject(@"swan_browser_visible", @"An instance of the swan browser is already visible", nil);
   }
@@ -123,11 +93,7 @@ RCT_EXPORT_METHOD(open:(NSString *)url
   }
 }
 
-#ifdef RCT_NEW_ARCH_ENABLED
 - (void)close {
-#else
-RCT_EXPORT_METHOD(close) {
-#endif
   if (_safariVC != nil) {
     [RCTPresentedViewController() dismissViewControllerAnimated:true completion:^{
       [self handleOnClose];

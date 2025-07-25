@@ -1,7 +1,5 @@
-import { Linking, NativeEventEmitter, processColor } from "react-native";
+import { Linking, processColor } from "react-native";
 import NativeModule from "./NativeRNSwanBrowser";
-
-const emitter = new NativeEventEmitter(NativeModule);
 
 export type AnimationType = "fade" | "slide";
 export type DismissButtonStyle = "cancel" | "close" | "done";
@@ -48,7 +46,7 @@ export const openBrowser = (url: string, options: Options): Promise<void> => {
       },
     );
 
-    const closeListener = emitter.addListener("swanBrowserDidClose", () => {
+    const closeListener = NativeModule.onClose(() => {
       onClose?.(deeplink);
 
       linkListener.remove();
