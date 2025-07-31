@@ -1,4 +1,4 @@
-import { openBrowser } from "@swan-io/react-native-browser";
+import { closeBrowser, openBrowser } from "@swan-io/react-native-browser";
 import { useCallback, useEffect } from "react";
 import { Alert, Button, Linking, SafeAreaView, StyleSheet } from "react-native";
 import parseUrl from "url-parse";
@@ -16,6 +16,8 @@ export const App = () => {
     const subscription = Linking.addListener(
       "url",
       ({ url }: { url: string }) => {
+        closeBrowser(); // required on iOS
+
         const { protocol, host, query } = parseUrl(url, true);
         const origin = `${protocol}//${host}`;
 
