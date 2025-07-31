@@ -24,7 +24,7 @@ $ npm install --save @swan-io/react-native-browser
 ## Quickstart
 
 ```tsx
-import { openBrowser } from "@swan-io/react-native-browser";
+import { openBrowser, closeBrowser } from "@swan-io/react-native-browser";
 import { useCallback } from "react";
 import { Button, SafeAreaView } from "react-native";
 import parseUrl from "url-parse";
@@ -34,6 +34,8 @@ const App = () => {
     const subscription = Linking.addListener(
       "url",
       ({ url }: { url: string }) => {
+        closeBrowser(); // required on iOS
+
         const { protocol, host, query } = parseUrl(url, true);
         const origin = `${protocol}//${host}`;
 
