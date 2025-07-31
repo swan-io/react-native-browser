@@ -1,34 +1,22 @@
 package io.swan.rnbrowser
 
 import android.content.Intent
-import android.net.Uri
 
 import androidx.annotation.ColorInt
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.net.toUri
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 
 import io.swan.rnbrowser.helpers.CustomTabActivityHelper
 
 object RNSwanBrowserModuleImpl {
   const val NAME = "RNSwanBrowser"
-  private var browserVisible = false
-
-  internal fun onHostResume(reactContext: ReactApplicationContext) {
-    if (browserVisible && reactContext.hasActiveReactInstance()) {
-      browserVisible = false
-
-      reactContext
-        .getJSModule(RCTDeviceEventEmitter::class.java)
-        .emit("swanBrowserDidClose", null)
-    }
-  }
 
   internal fun open(
     reactContext: ReactApplicationContext,
@@ -36,20 +24,11 @@ object RNSwanBrowserModuleImpl {
     options: ReadableMap,
     promise: Promise
   ) {
-    if (browserVisible) {
-      return promise.reject(
-        "swan_browser_visible",
-        "An instance of the swan browser is already visible"
-      )
-    }
-
     val activity = reactContext.currentActivity
       ?: return promise.reject(
         "no_current_activity",
         "Couldn't call open() when the app is in background"
       )
-
-    browserVisible = true
 
     val intentBuilder = CustomTabsIntent.Builder().apply {
       setBookmarksButtonEnabled(false)
@@ -95,7 +74,7 @@ object RNSwanBrowserModuleImpl {
     }
 
     CustomTabActivityHelper.openCustomTab(
-      activity, customTabsIntent, Uri.parse(url)
+      activity, customTabsIntent, url.toUri()
     ) { currentActivity, uri ->
       currentActivity.startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
