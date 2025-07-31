@@ -24,27 +24,33 @@ $ npm install --save @swan-io/react-native-browser
 ## Quickstart
 
 ```tsx
-import { openBrowser } from "@swan-io/react-native-browser";
+import { openBrowser, closeBrowser } from "@swan-io/react-native-browser";
 import { useCallback } from "react";
 import { Button, SafeAreaView } from "react-native";
 import parseUrl from "url-parse";
 
 const App = () => {
-  const handleOnPress = useCallback(() => {
-    openBrowser("https://swan.io", {
-      onClose: (url) => {
-        if (url) {
-          const { protocol, host, query } = parseUrl(url, true);
-          const origin = `${protocol}//${host}`;
+  useEffect(() => {
+    const subscription = Linking.addListener(
+      "url",
+      ({ url }: { url: string }) => {
+        const { protocol, host, query } = parseUrl(url, true);
+        const origin = `${protocol}//${host}`;
 
-          if (origin === "com.company.myapp://close") {
-            console.log(JSON.stringify(query, null, 2));
-          }
+        if (origin === "com.company.myapp://close") {
+          closeBrowser(); // required on iOS
+          console.log(JSON.stringify(query, null, 2));
         }
       },
-    }).catch((error) => {
-      console.error(error);
-    });
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  const handleOnPress = useCallback(() => {
+    openBrowser("https://swan.io").catch((error) => console.error(error));
   }, []);
 
   return (
@@ -57,7 +63,7 @@ const App = () => {
 
 ## API
 
-### openBrowser(url: string, options: Options)
+### openBrowser(url: string, options?: Options)
 
 ```tsx
 import { openBrowser } from "@swan-io/react-native-browser";
@@ -67,14 +73,6 @@ openBrowser("https://swan.io", {
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
   barTintColor: "#FFF", // in-app browser UI background color
   controlTintColor: "#000", // in-app browser buttons color
-  onOpen: () => {
-    // fired on browser opened
-    // useful to switch the StatusBar color, for example
-  },
-  onClose: (url) => {
-    // fired on browser closed
-    // url will be defined if the browser has been closed via deeplink
-  },
 }).catch((error) => {
   console.error(error);
 });
@@ -85,7 +83,7 @@ openBrowser("https://swan.io", {
 
 ## Handle deeplinks
 
-In order to receive deeplink on browser close event, you have to setup them first. We **highly** recommend defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
+In order to receive deeplink on browser close, you have to setup them first. We **highly** recommend defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
 
 ### On iOS
 

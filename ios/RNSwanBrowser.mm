@@ -9,9 +9,7 @@
 
 @end
 
-@implementation RNSwanBrowser {
-  bool hasListeners;
-}
+@implementation RNSwanBrowser
 
 RCT_EXPORT_MODULE();
 
@@ -23,24 +21,8 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
-- (void)startObserving {
-  hasListeners = YES;
-}
-
-- (void)stopObserving {
-  hasListeners = NO;
-}
-
-- (NSArray<NSString *> *)supportedEvents {
-  return @[@"swanBrowserDidClose"];
-}
-
 - (void)handleOnClose {
   _safariVC = nil;
-
-  if (hasListeners) {
-    [self sendEventWithName:@"swanBrowserDidClose" body:nil];
-  }
 }
 
 - (void)presentationControllerDidDismiss:(UIPresentationController *)controller {

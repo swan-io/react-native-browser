@@ -1,7 +1,5 @@
-import { Linking, NativeEventEmitter, processColor } from "react-native";
-import NativeModule from "./NativeRNSwanBrowser";
-
-const emitter = new NativeEventEmitter(NativeModule);
+import { processColor } from "react-native";
+import NativeModule from "./specs/NativeRNSwanBrowser";
 
 export type AnimationType = "fade" | "slide";
 export type DismissButtonStyle = "cancel" | "close" | "done";
@@ -11,8 +9,6 @@ export type Options = {
   dismissButtonStyle?: DismissButtonStyle;
   barTintColor?: string;
   controlTintColor?: string;
-  onOpen?: () => void;
-  onClose?: (url?: string) => void;
 };
 
 const convertColorToNumber = (
@@ -25,8 +21,11 @@ const convertColorToNumber = (
   }
 };
 
-export const openBrowser = (url: string, options: Options): Promise<void> => {
-  const { animationType, dismissButtonStyle, onOpen, onClose } = options;
+export const openBrowser = (
+  url: string,
+  options: Options = {},
+): Promise<void> => {
+  const { animationType, dismissButtonStyle } = options;
   const barTintColor = convertColorToNumber(options.barTintColor);
   const controlTintColor = convertColorToNumber(options.controlTintColor);
 
@@ -35,24 +34,9 @@ export const openBrowser = (url: string, options: Options): Promise<void> => {
     ...(dismissButtonStyle != null && { dismissButtonStyle }),
     ...(barTintColor != null && { barTintColor }),
     ...(controlTintColor != null && { controlTintColor }),
-  }).then(() => {
-    let deeplink: string | undefined;
+  }).then(() => {});
+};
 
-    onOpen?.();
-
-    const linkListener = Linking.addListener(
-      "url",
-      ({ url }: { url: string }) => {
-        deeplink = url;
-        NativeModule.close();
-      },
-    );
-
-    const closeListener = emitter.addListener("swanBrowserDidClose", () => {
-      onClose?.(deeplink);
-
-      linkListener.remove();
-      closeListener.remove();
-    });
-  });
+export const closeBrowser = (): void => {
+  NativeModule.close();
 };

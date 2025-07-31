@@ -1,6 +1,6 @@
 {
   "name": "@swan-io/react-native-browser",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "An easy-to-use in-app browser module for React Native.",
   "author": "Mathieu Acthernoene <mathieu.acthernoene@swan.io>",
@@ -42,7 +42,7 @@
   "codegenConfig": {
     "name": "RNSwanBrowserSpec",
     "type": "modules",
-    "jsSrcsDir": "./src",
+    "jsSrcsDir": "./src/specs",
     "android": {
       "javaPackageName": "io.swan.rnbrowser"
     }
@@ -68,12 +68,12 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
-    "@types/react": "^19.0.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "react": "19.0.0",
-    "react-native": "0.79.2",
-    "react-native-builder-bob": "^0.30.3",
-    "typescript": "^5.6.3"
+    "@types/react": "^19.1.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
+    "react": "19.1.0",
+    "react-native": "0.80.2",
+    "react-native-builder-bob": "^0.40.13",
+    "typescript": "^5.8.3"
   }
 }

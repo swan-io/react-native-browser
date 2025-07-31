@@ -7,8 +7,8 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet("kotlinVersion", "1.8.0")}")
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet("kotlinVersion", "1.9.22")}")
+        classpath("com.android.tools.build:gradle:8.2.1")
     }
 }
 
@@ -24,20 +24,13 @@ if (isNewArchitectureEnabled()) {
 }
 
 android {
+    namespace "io.swan.rnbrowser"
+
     buildToolsVersion safeExtGet("buildToolsVersion", "34.0.0")
     compileSdkVersion safeExtGet("compileSdkVersion", 34)
 
-    if (project.android.hasProperty("namespace")) {
-        namespace "io.swan.rnbrowser"
-
-        buildFeatures {
-            buildConfig true
-        }
-        sourceSets {
-            main {
-                manifest.srcFile "src/main/AndroidManifestNew.xml"
-            }
-        }
+    buildFeatures {
+        buildConfig true
     }
     defaultConfig {
         buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
