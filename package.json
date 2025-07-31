@@ -1,6 +1,6 @@
 {
   "name": "@swan-io/react-native-browser",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "An easy-to-use in-app browser module for React Native.",
   "author": "Mathieu Acthernoene <mathieu.acthernoene@swan.io>",
