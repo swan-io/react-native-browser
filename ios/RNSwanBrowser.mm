@@ -3,6 +3,12 @@
 #import <React/RCTConvert.h>
 #import <SafariServices/SafariServices.h>
 
+@interface RNSwanBrowser() <SFSafariViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
+
+@property (nonatomic, strong) SFSafariViewController *safariVC;
+
+@end
+
 @implementation RNSwanBrowser
 
 RCT_EXPORT_MODULE();
@@ -13,6 +19,18 @@ RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue {
   return dispatch_get_main_queue();
+}
+
+- (void)handleOnClose {
+  _safariVC = nil;
+}
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)controller {
+  [self handleOnClose];
+}
+
+- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
+  [self handleOnClose];
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -42,40 +60,60 @@ RCT_EXPORT_METHOD(open:(NSString *)url
   NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
 
 #endif
+  if (_safariVC != nil) {
+    return reject(@"swan_browser_visible", @"An instance of the swan browser is already visible", nil);
+  }
+
   @try {
     SFSafariViewControllerConfiguration *config = [SFSafariViewControllerConfiguration new];
     [config setBarCollapsingEnabled:false];
     [config setEntersReaderIfAvailable:false];
 
-    SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:[[NSURL alloc] initWithString:url] configuration:config];
+    _safariVC = [[SFSafariViewController alloc] initWithURL:[[NSURL alloc] initWithString:url] configuration:config];
 
     if (dismissButtonStyle == nil || [dismissButtonStyle isEqualToString:@"close"]) {
-      [safari setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleClose];
+      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleClose];
     } else if ([dismissButtonStyle isEqualToString:@"cancel"]) {
-      [safari setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleCancel];
+      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleCancel];
     } else if ([dismissButtonStyle isEqualToString:@"done"]) {
-      [safari setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleDone];
+      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleDone];
     }
 
     if (barTintColor != nil) {
-      [safari setPreferredBarTintColor:[RCTConvert UIColor:barTintColor]];
+      [_safariVC setPreferredBarTintColor:[RCTConvert UIColor:barTintColor]];
     }
     if (controlTintColor != nil) {
-      [safari setPreferredControlTintColor:[RCTConvert UIColor:controlTintColor]];
+      [_safariVC setPreferredControlTintColor:[RCTConvert UIColor:controlTintColor]];
     }
 
     if (animationType != nil && [animationType isEqualToString:@"fade"]) {
-      [safari setModalPresentationStyle:UIModalPresentationOverFullScreen];
-      [safari setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+      [_safariVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+      [_safariVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     } else {
-      [safari setModalPresentationStyle:UIModalPresentationPageSheet];
+      [_safariVC setModalPresentationStyle:UIModalPresentationPageSheet];
     }
 
-    [RCTPresentedViewController() presentViewController:safari animated:true completion:nil];
+    [RCTPresentedViewController() presentViewController:_safariVC animated:true completion:nil];
+
+    _safariVC.delegate = self;
+    _safariVC.presentationController.delegate = self;
 
     resolve(nil);
   } @catch (NSException *exception) {
+    _safariVC = nil;
     reject(exception.name, exception.reason, nil);
+  }
+}
+
+#ifdef RCT_NEW_ARCH_ENABLED
+- (void)close {
+#else
+RCT_EXPORT_METHOD(close) {
+#endif
+  if (_safariVC != nil) {
+    [RCTPresentedViewController() dismissViewControllerAnimated:true completion:^{
+      [self handleOnClose];
+    }];
   }
 }
 

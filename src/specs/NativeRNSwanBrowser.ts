@@ -10,6 +10,7 @@ type Options = {
 
 export interface Spec extends TurboModule {
   open(url: string, options: Options): Promise<null>;
+  close(): void;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>("RNSwanBrowser");

@@ -36,3 +36,7 @@ export const openBrowser = (
     ...(controlTintColor != null && { controlTintColor }),
   }).then(() => {});
 };
+
+export const closeBrowser = (): void => {
+  NativeModule.close();
+};
