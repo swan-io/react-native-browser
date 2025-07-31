@@ -83,7 +83,7 @@ openBrowser("https://swan.io", {
 
 ## Handle deeplinks
 
-In order to receive deeplink on browser close, you have to setup them first. We **highly** recommand defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
+In order to receive deeplink on browser close, you have to setup them first. We **highly** recommend defining a custom schema + url for this specific task. For example, `com.company.myapp://close`.
 
 ### On iOS
 
