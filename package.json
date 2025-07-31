@@ -42,7 +42,7 @@
   "codegenConfig": {
     "name": "RNSwanBrowserSpec",
     "type": "modules",
-    "jsSrcsDir": "./src",
+    "jsSrcsDir": "./src/specs",
     "android": {
       "javaPackageName": "io.swan.rnbrowser"
     }

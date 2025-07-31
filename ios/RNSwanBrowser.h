@@ -1,9 +1,15 @@
+#ifdef RCT_NEW_ARCH_ENABLED
+
 #import <RNSwanBrowserSpec/RNSwanBrowserSpec.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface RNSwanBrowser : NativeRNSwanBrowserSpecBase <NativeRNSwanBrowserSpec>
-
+@interface RNSwanBrowser : NSObject <NativeRNSwanBrowserSpec>
 @end
 
-NS_ASSUME_NONNULL_END
+#else
+
+#import <React/RCTBridgeModule.h>
+
+@interface RNSwanBrowser : NSObject <RCTBridgeModule>
+@end
+
+#endif
