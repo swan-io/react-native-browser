@@ -19,4 +19,9 @@ class RNSwanBrowserModule(reactContext: ReactApplicationContext) :
   fun open(url: String, options: ReadableMap, promise: Promise) {
     RNSwanBrowserModuleImpl.open(reactApplicationContext, url, options, promise)
   }
+
+  @ReactMethod
+  fun close() {
+    // noop on Android since the modal is closed by deep-link
+  }
 }
