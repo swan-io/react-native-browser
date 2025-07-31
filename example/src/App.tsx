@@ -16,12 +16,11 @@ export const App = () => {
     const subscription = Linking.addListener(
       "url",
       ({ url }: { url: string }) => {
-        closeBrowser(); // required on iOS
-
         const { protocol, host, query } = parseUrl(url, true);
         const origin = `${protocol}//${host}`;
 
         if (origin === "io.swan.rnbrowserexample://close") {
+          closeBrowser(); // required on iOS
           Alert.alert("Deeplink received", JSON.stringify(query, null, 2));
         }
       },

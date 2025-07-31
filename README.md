@@ -34,12 +34,11 @@ const App = () => {
     const subscription = Linking.addListener(
       "url",
       ({ url }: { url: string }) => {
-        closeBrowser(); // required on iOS
-
         const { protocol, host, query } = parseUrl(url, true);
         const origin = `${protocol}//${host}`;
 
         if (origin === "com.company.myapp://close") {
+          closeBrowser(); // required on iOS
           console.log(JSON.stringify(query, null, 2));
         }
       },
