@@ -111,7 +111,7 @@ RCT_EXPORT_METHOD(open:(NSString *)url
 RCT_EXPORT_METHOD(close) {
 #endif
   if (_safariVC != nil) {
-    [RCTPresentedViewController() dismissViewControllerAnimated:true completion:^{
+    [_safariVC dismissViewControllerAnimated:true completion:^{
       [self handleOnClose];
     }];
   }
