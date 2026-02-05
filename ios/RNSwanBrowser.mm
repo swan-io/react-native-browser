@@ -6,12 +6,15 @@
 @interface RNSwanBrowser() <SFSafariViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic, strong) SFSafariViewController *safariVC;
+@property (nonatomic, assign) BOOL hasListeners;
 
 @end
 
 @implementation RNSwanBrowser
 
 RCT_EXPORT_MODULE();
+
+static NSString *const RNSwanBrowserOnCloseEvent = @"swanBrowserOnClose";
 
 + (BOOL)requiresMainQueueSetup {
   return NO;
@@ -21,8 +24,23 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
+- (NSArray<NSString *> *)supportedEvents {
+  return @[RNSwanBrowserOnCloseEvent];
+}
+
+- (void)startObserving {
+  _hasListeners = YES;
+}
+
+- (void)stopObserving {
+  _hasListeners = NO;
+}
+
 - (void)handleOnClose {
   _safariVC = nil;
+  if (_hasListeners) {
+    [self sendEventWithName:RNSwanBrowserOnCloseEvent body:nil];
+  }
 }
 
 - (void)presentationControllerDidDismiss:(UIPresentationController *)controller {
@@ -107,14 +125,36 @@ RCT_EXPORT_METHOD(open:(NSString *)url
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (void)close {
-#else
-RCT_EXPORT_METHOD(close) {
-#endif
   if (_safariVC != nil) {
     [_safariVC dismissViewControllerAnimated:true completion:^{
       [self handleOnClose];
     }];
   }
 }
+
+- (void)addListener:(NSString *)eventName {
+  [super addListener:eventName];
+}
+
+- (void)removeListeners:(double)count {
+  [super removeListeners:count];
+}
+#else
+RCT_EXPORT_METHOD(close) {
+  if (_safariVC != nil) {
+    [_safariVC dismissViewControllerAnimated:true completion:^{
+      [self handleOnClose];
+    }];
+  }
+}
+
+RCT_EXPORT_METHOD(addListener:(NSString *)eventName) {
+  // Managed by RCTEventEmitter
+}
+
+RCT_EXPORT_METHOD(removeListeners:(double)count) {
+  // Managed by RCTEventEmitter
+}
+#endif
 
 @end

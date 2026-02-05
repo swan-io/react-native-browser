@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "^22"
+    "node": ">=22"
   },
   "scripts": {
     "clean": "rm -rf ./node_modules ./ios/Pods",
     "start": "react-native start",
+    "android": "react-native run-android --list-devices",
+    "ios": "react-native run-ios",
     "serve": "serve ./src",
     "reinstall": "yarn clean && yarn",
     "preinstall": "cd .. && yarn && yarn build && cd example"

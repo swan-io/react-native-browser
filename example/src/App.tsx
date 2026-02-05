@@ -37,6 +37,9 @@ export const App = () => {
       dismissButtonStyle: "close",
       barTintColor: "#FFF",
       controlTintColor: "#000",
+      onClose: () => {
+        console.log("onClose trigger");
+      },
     }).catch((error) => {
       console.error(error);
     });
