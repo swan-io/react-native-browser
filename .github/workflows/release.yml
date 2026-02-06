@@ -28,8 +28,20 @@ jobs:
       - run: yarn install --pure-lockfile
       - run: yarn prepack
 
+      - name: Determine npm tag
+        id: npm-tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *"-"* ]]; then
+            # Prerelease version (e.g., 1.0.0-beta.0, 1.0.0-alpha.1, 1.0.0-rc.0)
+            PRERELEASE_ID=$(echo "$VERSION" | sed 's/.*-\([a-zA-Z]*\).*/\1/')
+            echo "tag=$PRERELEASE_ID" >> $GITHUB_OUTPUT
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish
         env:
           NPM_CONFIG_PROVENANCE: true
         run: |
-          npm publish --no-git-checks --access public --registry https://registry.npmjs.org
+          npm publish --no-git-checks --access public --registry https://registry.npmjs.org --tag ${{ steps.npm-tag.outputs.tag }}
