@@ -149,11 +149,11 @@ RCT_EXPORT_METHOD(close) {
 }
 
 RCT_EXPORT_METHOD(addListener:(NSString *)eventName) {
-  // Managed by RCTEventEmitter
+  [super addListener:eventName];
 }
 
 RCT_EXPORT_METHOD(removeListeners:(double)count) {
-  // Managed by RCTEventEmitter
+  [super removeListeners:count];
 }
 #endif
 
