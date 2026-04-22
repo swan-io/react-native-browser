@@ -73,6 +73,7 @@ openBrowser("https://swan.io", {
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
   barTintColor: "#FFF", // in-app browser UI background color
   controlTintColor: "#000", // in-app browser buttons color
+  onClose: () => {}, // Callback function
 }).catch((error) => {
   console.error(error);
 });

@@ -1,15 +1,15 @@
+#import <React/RCTEventEmitter.h>
+
 #ifdef RCT_NEW_ARCH_ENABLED
 
 #import <RNSwanBrowserSpec/RNSwanBrowserSpec.h>
 
-@interface RNSwanBrowser : NSObject <NativeRNSwanBrowserSpec>
+@interface RNSwanBrowser : RCTEventEmitter <NativeRNSwanBrowserSpec>
 @end
 
 #else
 
-#import <React/RCTBridgeModule.h>
-
-@interface RNSwanBrowser : NSObject <RCTBridgeModule>
+@interface RNSwanBrowser : RCTEventEmitter <RCTBridgeModule>
 @end
 
 #endif

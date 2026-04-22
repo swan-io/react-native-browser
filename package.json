@@ -1,6 +1,6 @@
 {
   "name": "@swan-io/react-native-browser",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "An easy-to-use in-app browser module for React Native.",
   "author": "Mathieu Acthernoene <mathieu.acthernoene@swan.io>",
@@ -72,8 +72,8 @@
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.2.0",
     "react": "19.1.0",
-    "react-native": "0.80.2",
-    "react-native-builder-bob": "^0.40.13",
+    "react-native": "0.85.2",
+    "react-native-builder-bob": "^0.41.0",
     "typescript": "^5.8.3"
   }
 }
