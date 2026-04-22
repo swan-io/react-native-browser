@@ -1,5 +1,5 @@
 import { closeBrowser, openBrowser } from "@swan-io/react-native-browser";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Alert, Button, Linking, SafeAreaView, StyleSheet } from "react-native";
 import parseUrl from "url-parse";
 
@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
 });
 
 export const App = () => {
+  const closedByDeepLinkRef = useRef(false);
+
   useEffect(() => {
     const subscription = Linking.addListener(
       "url",
@@ -20,6 +22,7 @@ export const App = () => {
         const origin = `${protocol}//${host}`;
 
         if (origin === "io.swan.rnbrowserexample://close") {
+          closedByDeepLinkRef.current = true;
           closeBrowser(); // required on iOS
           Alert.alert("Deeplink received", JSON.stringify(query, null, 2));
         }
@@ -38,7 +41,12 @@ export const App = () => {
       barTintColor: "#FFF",
       controlTintColor: "#000",
       onClose: () => {
-        console.log("onClose trigger");
+        if (closedByDeepLinkRef.current) {
+          console.log("Closed by deep link");
+          closedByDeepLinkRef.current = false;
+        } else {
+          console.log("Closed manually (X button or swipe)");
+        }
       },
     }).catch((error) => {
       console.error(error);
