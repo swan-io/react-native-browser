@@ -3,7 +3,7 @@ const pkg = require("../package.json");
 
 const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
 const escape = require("escape-string-regexp");
-const exclusionList = require("metro-config/src/defaults/exclusionList");
+const exclusionList = require("metro-config/private/defaults/exclusionList").default;
 
 const peerDependencies = Object.keys(pkg.peerDependencies);
 const root = path.resolve(__dirname, "..");
