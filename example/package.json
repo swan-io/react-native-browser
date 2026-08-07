@@ -34,5 +34,8 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "serve": "^14.2.4",
     "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "shell-quote": "^1.9.0"
   }
 }
