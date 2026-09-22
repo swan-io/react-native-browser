@@ -10,6 +10,16 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet("kotlinVersion", "1.9.22")}")
         classpath("com.android.tools.build:gradle:8.2.1")
     }
+    configurations.classpath.resolutionStrategy {
+        // CVE-2026-75595: netty-handler 4.1.72.Final is pulled transitively by the Android
+        // Gradle plugin (via grpc-netty). Netty modules are not compatible across versions,
+        // so align the whole group rather than netty-handler alone.
+        eachDependency { details ->
+            if (details.requested.group == "io.netty") {
+                details.useVersion "4.1.137.Final"
+            }
+        }
+    }
 }
 
 def isNewArchitectureEnabled() {
