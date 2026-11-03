@@ -17,6 +17,7 @@
 package io.swan.rnbrowser.helpers;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -58,7 +59,16 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
       }
     } else {
       customTabsIntent.intent.setPackage(packageName);
-      customTabsIntent.launchUrl(activity, uri);
+
+      try {
+        customTabsIntent.launchUrl(activity, uri);
+      } catch (ActivityNotFoundException e) {
+        // The package can support the Custom Tabs service but still fail to
+        // resolve the VIEW intent (e.g. browser disabled or updated since the
+        // package name was cached). Use the fallback instead of crashing.
+        if (fallback == null) throw e;
+        fallback.openUri(activity, uri);
+      }
     }
   }
 
