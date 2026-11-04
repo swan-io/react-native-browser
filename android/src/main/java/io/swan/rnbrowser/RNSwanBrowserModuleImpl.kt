@@ -1,5 +1,6 @@
 package io.swan.rnbrowser
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 
@@ -79,10 +80,15 @@ object RNSwanBrowserModuleImpl {
       }
     }
 
-    CustomTabActivityHelper.openCustomTab(
-      activity, customTabsIntent, url.toUri()
-    ) { currentActivity, uri ->
-      currentActivity.startActivity(Intent(Intent.ACTION_VIEW, uri))
+    try {
+      CustomTabActivityHelper.openCustomTab(
+        activity, customTabsIntent, url.toUri()
+      ) { currentActivity, uri ->
+        currentActivity.startActivity(Intent(Intent.ACTION_VIEW, uri))
+      }
+    } catch (e: ActivityNotFoundException) {
+      promise.reject("no_activity_found", "No activity found to open $url", e)
+      return false
     }
 
     promise.resolve(null)
