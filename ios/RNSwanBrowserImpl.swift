@@ -26,8 +26,13 @@ public final class RNSwanBrowserImpl: NSObject {
     resolve: () -> Void,
     reject: (_ code: String, _ message: String) -> Void
   ) {
-    if safariVC != nil {
-      return reject("swan_browser_visible", "An instance of the swan browser is already visible")
+    if let safariVC {
+      if safariVC.presentingViewController != nil {
+        return reject("swan_browser_visible", "An instance of the swan browser is already visible")
+      }
+      // The browser was dismissed without any delegate callback (e.g. along with a parent
+      // modal): report it as closed instead of staying locked.
+      handleOnClose()
     }
 
     // SFSafariViewController raises an Objective-C exception for anything other than an
@@ -72,12 +77,18 @@ public final class RNSwanBrowserImpl: NSObject {
       safariVC.modalPresentationStyle = .pageSheet
     }
 
-    self.safariVC = safariVC
-    presenter.present(safariVC, animated: true)
-
     safariVC.delegate = self
     safariVC.presentationController?.delegate = self
 
+    presenter.present(safariVC, animated: true)
+
+    // present(_:animated:) fails without an error, e.g. when the presenter is mid-transition.
+    // On success, presentingViewController is set as soon as present returns.
+    guard safariVC.presentingViewController != nil else {
+      return reject("swan_browser_present_failed", "Could not present the swan browser")
+    }
+
+    self.safariVC = safariVC
     resolve()
   }
 
@@ -86,8 +97,16 @@ public final class RNSwanBrowserImpl: NSObject {
       return
     }
 
+    // Already dismissed without any delegate callback: dismiss() would be a no-op and its
+    // completion would never run.
+    guard safariVC.presentingViewController != nil else {
+      return handleOnClose()
+    }
+
     safariVC.dismiss(animated: true) { [weak self] in
-      self?.handleOnClose()
+      if let self, self.safariVC === safariVC {
+        self.handleOnClose()
+      }
     }
   }
 
@@ -99,12 +118,16 @@ public final class RNSwanBrowserImpl: NSObject {
 
 extension RNSwanBrowserImpl: SFSafariViewControllerDelegate {
   public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-    handleOnClose()
+    if controller === safariVC {
+      handleOnClose()
+    }
   }
 }
 
 extension RNSwanBrowserImpl: UIAdaptivePresentationControllerDelegate {
   public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-    handleOnClose()
+    if presentationController.presentedViewController === safariVC {
+      handleOnClose()
+    }
   }
 }
