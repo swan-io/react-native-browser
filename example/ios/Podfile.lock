@@ -1747,7 +1747,7 @@ PODS:
     - React-utils (= 0.85.2)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.85.2)
-  - RNSwanBrowser (1.1.2):
+  - RNSwanBrowser (1.2.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2072,7 +2072,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 5bd23df5c8ad6c87df0bc8ccd391bd37bf6c92d5
   ReactCommon: a804bb8d1dcf3ecdec3a77eb8bba19b7863bbbdb
   ReactNativeDependencies: 8bbce6459b20789e1bcc50f6fd2a22d977fc3c78
-  RNSwanBrowser: 3ea9cf612ff0deca340ca67ad93efedb7f1b1c8f
+  RNSwanBrowser: 315d658d2e916296fb73516010faee16bd060b30
   Yoga: 04bb4bfeb02c0000b940c1e6e89e856cd8de5a71
 
 PODFILE CHECKSUM: 23f5a70c5b648ab8792ffb53c2d48f23e6a978a7
