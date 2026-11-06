@@ -79,6 +79,17 @@ openBrowser("https://swan.io", {
 });
 ```
 
+The promise rejects with an error whose `code` is one of:
+
+| Code                          | Platform | Reason                                                                     |
+| ----------------------------- | -------- | -------------------------------------------------------------------------- |
+| `swan_browser_visible`        | iOS      | A browser is already visible                                               |
+| `swan_browser_invalid_url`    | iOS      | The URL is not an `http` or `https` URL                                    |
+| `swan_browser_no_presenter`   | iOS      | No view controller is available to present the browser                     |
+| `swan_browser_present_failed` | iOS      | iOS refused to present the browser (e.g. another screen is mid-transition) |
+| `no_current_activity`         | Android  | The app is in the background                                               |
+| `no_activity_found`           | Android  | No app can open the URL                                                    |
+
 > [!IMPORTANT]
 > On Android, the Chrome app must be opened at least once for this to work — a step often overlooked when using emulators in development.
 
