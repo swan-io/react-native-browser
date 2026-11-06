@@ -64,14 +64,16 @@ export const openBrowser = (
   const barTintColor = convertColorToNumber(options.barTintColor);
   const controlTintColor = convertColorToNumber(options.controlTintColor);
 
-  setupOnCloseListener(options.onClose);
-
   return NativeModule.open(url, {
     ...(animationType != null && { animationType }),
     ...(dismissButtonStyle != null && { dismissButtonStyle }),
     ...(barTintColor != null && { barTintColor }),
     ...(controlTintColor != null && { controlTintColor }),
-  }).then(() => {});
+  }).then(() => {
+    // Only replace the handler once this browser is actually open: a rejected call
+    // (e.g. a browser is already visible) must keep the visible browser's onClose.
+    setupOnCloseListener(options.onClose);
+  });
 };
 
 export const closeBrowser = (): void => {
