@@ -71,8 +71,8 @@ import { openBrowser } from "@swan-io/react-native-browser";
 openBrowser("https://swan.io", {
   animationType: "slide", // "fade" | "slide" (default to "slide")
   dismissButtonStyle: "close", // "cancel" | "close" | "done" (default to "close")
-  barTintColor: "#FFF", // in-app browser UI background color
-  controlTintColor: "#000", // in-app browser buttons color
+  barTintColor: "#FFF", // in-app browser UI background color (ignored on iOS 26+)
+  controlTintColor: "#000", // in-app browser buttons color (ignored on iOS 26+)
   onClose: () => {}, // Callback function
 }).catch((error) => {
   console.error(error);
