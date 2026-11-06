@@ -15,8 +15,12 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source       = { :git => package["repository"]["url"], :tag => s.version }
-  s.source_files = "ios/**/*.{h,m,mm}"
+  s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.frameworks   = "SafariServices"
+  s.swift_version = "5.0"
+
+  # Lets RNSwanBrowser.mm import the generated RNSwanBrowser-Swift.h header.
+  s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
     install_modules_dependencies(s)

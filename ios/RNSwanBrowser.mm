@@ -1,20 +1,38 @@
 #import "RNSwanBrowser.h"
 
 #import <React/RCTConvert.h>
+#import <React/RCTUtils.h>
 #import <SafariServices/SafariServices.h>
 
-@interface RNSwanBrowser() <SFSafariViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
+// The generated Swift header declares SafariServices delegate conformances, so the import above
+// must come first.
+#if __has_include("RNSwanBrowser-Swift.h")
+#import "RNSwanBrowser-Swift.h"
+#else
+#import <RNSwanBrowser/RNSwanBrowser-Swift.h>
+#endif
 
-@property (nonatomic, strong) SFSafariViewController *safariVC;
-@property (nonatomic, assign) BOOL hasListeners;
+// React Native glue only: the browser itself is implemented in RNSwanBrowserImpl.swift.
+// The TurboModule spec is a C++ protocol, so this layer has to stay in Objective-C++.
 
-@end
+static NSString *const RNSwanBrowserOnCloseEvent = @"swanBrowserOnClose";
 
-@implementation RNSwanBrowser
+@implementation RNSwanBrowser {
+  RNSwanBrowserImpl *_impl;
+  BOOL _hasListeners;
+}
 
 RCT_EXPORT_MODULE();
 
-static NSString *const RNSwanBrowserOnCloseEvent = @"swanBrowserOnClose";
+- (instancetype)init {
+  if (self = [super init]) {
+    __weak RNSwanBrowser *weakSelf = self;
+    _impl = [[RNSwanBrowserImpl alloc] initWithOnClose:^{
+      [weakSelf handleOnClose];
+    }];
+  }
+  return self;
+}
 
 + (BOOL)requiresMainQueueSetup {
   return NO;
@@ -37,18 +55,30 @@ static NSString *const RNSwanBrowserOnCloseEvent = @"swanBrowserOnClose";
 }
 
 - (void)handleOnClose {
-  _safariVC = nil;
   if (_hasListeners) {
     [self sendEventWithName:RNSwanBrowserOnCloseEvent body:nil];
   }
 }
 
-- (void)presentationControllerDidDismiss:(UIPresentationController *)controller {
-  [self handleOnClose];
-}
-
-- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
-  [self handleOnClose];
+- (void)openURL:(NSString *)url
+  animationType:(NSString *)animationType
+dismissButtonStyle:(NSString *)dismissButtonStyle
+   barTintColor:(NSNumber *)barTintColor
+controlTintColor:(NSNumber *)controlTintColor
+        resolve:(RCTPromiseResolveBlock)resolve
+         reject:(RCTPromiseRejectBlock)reject {
+  [_impl open:url
+       animationType:animationType
+  dismissButtonStyle:dismissButtonStyle
+        barTintColor:barTintColor != nil ? [RCTConvert UIColor:barTintColor] : nil
+    controlTintColor:controlTintColor != nil ? [RCTConvert UIColor:controlTintColor] : nil
+           presenter:RCTPresentedViewController()
+             resolve:^{
+               resolve(nil);
+             }
+              reject:^(NSString *code, NSString *message) {
+                reject(code, message, nil);
+              }];
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -60,76 +90,17 @@ static NSString *const RNSwanBrowserOnCloseEvent = @"swanBrowserOnClose";
      options:(JS::NativeRNSwanBrowser::Options &)options
      resolve:(RCTPromiseResolveBlock)resolve
       reject:(RCTPromiseRejectBlock)reject {
-
-  NSString *animationType = options.animationType();
-  NSString *dismissButtonStyle = options.dismissButtonStyle();
-  NSNumber *barTintColor = options.barTintColor().has_value() ? [NSNumber numberWithDouble:options.barTintColor().value()] : nil;
-  NSNumber *controlTintColor = options.controlTintColor().has_value() ? [NSNumber numberWithDouble:options.controlTintColor().value()] : nil;
-
-#else
-RCT_EXPORT_METHOD(open:(NSString *)url
-                  options:(NSDictionary * _Nonnull)options
-                  resolve:(RCTPromiseResolveBlock)resolve
-                  reject:(RCTPromiseRejectBlock)reject) {
-
-  NSString *animationType = [options valueForKey:@"animationType"];
-  NSString *dismissButtonStyle = [options valueForKey:@"dismissButtonStyle"];
-  NSNumber *barTintColor = [options valueForKey:@"barTintColor"];
-  NSNumber *controlTintColor = [options valueForKey:@"controlTintColor"];
-
-#endif
-  if (_safariVC != nil) {
-    return reject(@"swan_browser_visible", @"An instance of the swan browser is already visible", nil);
-  }
-
-  @try {
-    SFSafariViewControllerConfiguration *config = [SFSafariViewControllerConfiguration new];
-    [config setBarCollapsingEnabled:false];
-    [config setEntersReaderIfAvailable:false];
-
-    _safariVC = [[SFSafariViewController alloc] initWithURL:[[NSURL alloc] initWithString:url] configuration:config];
-
-    if (dismissButtonStyle == nil || [dismissButtonStyle isEqualToString:@"close"]) {
-      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleClose];
-    } else if ([dismissButtonStyle isEqualToString:@"cancel"]) {
-      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleCancel];
-    } else if ([dismissButtonStyle isEqualToString:@"done"]) {
-      [_safariVC setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleDone];
-    }
-
-    if (barTintColor != nil) {
-      [_safariVC setPreferredBarTintColor:[RCTConvert UIColor:barTintColor]];
-    }
-    if (controlTintColor != nil) {
-      [_safariVC setPreferredControlTintColor:[RCTConvert UIColor:controlTintColor]];
-    }
-
-    if (animationType != nil && [animationType isEqualToString:@"fade"]) {
-      [_safariVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
-      [_safariVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    } else {
-      [_safariVC setModalPresentationStyle:UIModalPresentationPageSheet];
-    }
-
-    [RCTPresentedViewController() presentViewController:_safariVC animated:true completion:nil];
-
-    _safariVC.delegate = self;
-    _safariVC.presentationController.delegate = self;
-
-    resolve(nil);
-  } @catch (NSException *exception) {
-    _safariVC = nil;
-    reject(exception.name, exception.reason, nil);
-  }
+  [self openURL:url
+       animationType:options.animationType()
+  dismissButtonStyle:options.dismissButtonStyle()
+        barTintColor:options.barTintColor().has_value() ? @(options.barTintColor().value()) : nil
+    controlTintColor:options.controlTintColor().has_value() ? @(options.controlTintColor().value()) : nil
+             resolve:resolve
+              reject:reject];
 }
 
-#ifdef RCT_NEW_ARCH_ENABLED
 - (void)close {
-  if (_safariVC != nil) {
-    [_safariVC dismissViewControllerAnimated:true completion:^{
-      [self handleOnClose];
-    }];
-  }
+  [_impl close];
 }
 
 - (void)addListener:(NSString *)eventName {
@@ -140,12 +111,21 @@ RCT_EXPORT_METHOD(open:(NSString *)url
   [super removeListeners:count];
 }
 #else
+RCT_EXPORT_METHOD(open:(NSString *)url
+                  options:(NSDictionary * _Nonnull)options
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject) {
+  [self openURL:url
+       animationType:options[@"animationType"]
+  dismissButtonStyle:options[@"dismissButtonStyle"]
+        barTintColor:options[@"barTintColor"]
+    controlTintColor:options[@"controlTintColor"]
+             resolve:resolve
+              reject:reject];
+}
+
 RCT_EXPORT_METHOD(close) {
-  if (_safariVC != nil) {
-    [_safariVC dismissViewControllerAnimated:true completion:^{
-      [self handleOnClose];
-    }];
-  }
+  [_impl close];
 }
 
 RCT_EXPORT_METHOD(addListener:(NSString *)eventName) {
