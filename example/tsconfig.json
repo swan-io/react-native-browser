@@ -3,7 +3,7 @@
     "module": "ESNext",
     "lib": ["ES2017"],
     "jsx": "react-native",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
 
     "allowJs": false,
     "strict": true,
